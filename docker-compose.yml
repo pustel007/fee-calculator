@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  php:
+    build: ./docker/php
+    volumes:
+      - .:/var/www:delegated
+    environment:
+      APP_ENV: "dev"
