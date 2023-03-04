@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Pustel007\FeeCalculator\Mapper;
 
 use OutOfRangeException;
+use Pustel007\FeeCalculator\Mapper\MapProvider\MapProviderInterface;
 
 final class Mapper implements MapperInterface
 {
     protected $breakpointsMap;
 
-    public function __construct(MapProvider\MapProviderInterface $breakpointsMapProvider)
+    public function __construct(MapProviderInterface $breakpointsMapProvider)
     {
         $this->breakpointsMap = $breakpointsMapProvider->provide();
     }

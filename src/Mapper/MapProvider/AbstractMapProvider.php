@@ -7,7 +7,7 @@ namespace Pustel007\FeeCalculator\Mapper\MapProvider;
 use LogicException;
 use Pustel007\FeeCalculator\Model\BreakpointsMap;
 
-abstract class MapProvider implements MapProviderInterface
+abstract class AbstractMapProvider implements MapProviderInterface
 {
     protected $breakpointsMap;
 

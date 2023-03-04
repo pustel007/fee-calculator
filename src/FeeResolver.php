@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Pustel007\FeeCalculator;
 
+use Pustel007\FeeCalculator\Mapper\MapperInterface;
+
 final class FeeResolver
 {
-    public function resolve(float $amount, Mapper\MapperInterface $mapper): float
+    public function resolve(float $amount, MapperInterface $mapper): float
     {
         $fee = $mapper->interpolate($amount);
 

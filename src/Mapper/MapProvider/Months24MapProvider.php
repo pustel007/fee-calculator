@@ -6,7 +6,7 @@ namespace Pustel007\FeeCalculator\Mapper\MapProvider;
 
 use Pustel007\FeeCalculator\Model\BreakpointsMap;
 
-final class Months24MapProvider extends MapProvider implements MapProviderInterface
+final class Months24MapProvider extends AbstractMapProvider implements MapProviderInterface
 {
     protected function retrieve(): void
     {
