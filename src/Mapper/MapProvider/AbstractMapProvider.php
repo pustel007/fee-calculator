@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace Pustel007\FeeCalculator\Mapper\MapProvider;
 
-use LogicException;
-use Pustel007\FeeCalculator\Model\BreakpointsMap;
+use Pustel007\FeeCalculator\Model\Map;
+use Pustel007\FeeCalculator\Validator\MapValidator;
 
 abstract class AbstractMapProvider implements MapProviderInterface
 {
-    protected $breakpointsMap;
+    protected $map;
+    protected $mapValidator;
+
+    public function __construct()
+    {
+        $this->mapValidator = new MapValidator();
+    }
 
     abstract protected function retrieve(): void;
 
-    public function provide(): BreakpointsMap
+    public function provide(): Map
     {
         $this->retrieve();
+        $this->mapValidator->validate($this->map);
 
-        if (
-            !($this->breakpointsMap instanceof BreakpointsMap)
-            || count($this->breakpointsMap->breakpoints()) < 2
-        ) {
-            throw new LogicException('Invalid breakpointsMap data');
-        }
-
-        return $this->breakpointsMap;
+        return $this->map;
     }
 }

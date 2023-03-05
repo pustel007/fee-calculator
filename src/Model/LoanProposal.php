@@ -7,7 +7,6 @@ namespace Pustel007\FeeCalculator\Model;
 final class LoanProposal
 {
     private int $term;
-
     private float $amount;
 
     public function __construct(int $term, float $amount)
@@ -17,10 +16,9 @@ final class LoanProposal
     }
 
     /**
-     * Term (loan duration) for this loan application
-     * in number of months.
+     * Term (loan duration) for this loan application in number of months.
      */
-    public function term(): int
+    public function getTerm(): int
     {
         return $this->term;
     }
@@ -28,7 +26,7 @@ final class LoanProposal
     /**
      * Amount requested for this loan application.
      */
-    public function amount(): float
+    public function getAmount(): float
     {
         return $this->amount;
     }

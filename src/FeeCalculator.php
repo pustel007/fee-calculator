@@ -6,23 +6,29 @@ namespace Pustel007\FeeCalculator;
 
 use Pustel007\FeeCalculator\FeeCalculatorInterface;
 use Pustel007\FeeCalculator\Model\LoanProposal;
+use Pustel007\FeeCalculator\Validator\LoanProposalValidator;
 
 class FeeCalculator implements FeeCalculatorInterface
 {
+    private $applicationValidator;
     private $mapperBuilder;
-    private $feeResolver;
 
     public function __construct()
     {
+        $this->applicationValidator = new LoanProposalValidator();
         $this->mapperBuilder = new MapperBuilder();
-        $this->feeResolver = new FeeResolver();
     }
 
     public function calculate(LoanProposal $application): float
     {
-        $mapper = $this->mapperBuilder->build($application->term());
-        $fee = $this->feeResolver->resolve($application->amount(), $mapper);
+        $this->applicationValidator->validate($application);
 
-        return $fee;
+        $mapper = $this->mapperBuilder->build($application->getTerm());
+        $fee = $mapper->interpolate($application->getAmount());
+
+        return FeeFormatter::ceil(
+            $fee,
+            $application->getAmount()
+        );
     }
 }

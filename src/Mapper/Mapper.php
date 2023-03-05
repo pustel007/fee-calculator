@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Pustel007\FeeCalculator\Mapper;
 
-use OutOfRangeException;
 use Pustel007\FeeCalculator\Mapper\MapProvider\MapProviderInterface;
 
 final class Mapper implements MapperInterface
 {
-    protected $breakpointsMap;
+    protected $map;
 
-    public function __construct(MapProviderInterface $breakpointsMapProvider)
+    public function __construct(MapProviderInterface $mapProvider)
     {
-        $this->breakpointsMap = $breakpointsMapProvider->provide();
+        $this->map = $mapProvider->provide();
     }
 
     public function interpolate(float $inputAmount): float
@@ -21,11 +20,7 @@ final class Mapper implements MapperInterface
         $fee = null;
         $amount = null;
 
-        if (!$this->validateAmount($inputAmount)) {
-            throw new OutOfRangeException(sprintf('Invalid input amount (%s)', $inputAmount));
-        }
-
-        foreach ($this->breakpointsMap->breakpoints() as $searchAmount => $searchFee) {
+        foreach ($this->map->getBreakpoints() as $searchAmount => $searchFee) {
             if ($searchAmount >= $inputAmount) {
                 $factor = ($inputAmount - $amount) / ($searchAmount - $amount);
                 return (float) $fee + $factor * ($searchFee - $fee);
@@ -36,17 +31,5 @@ final class Mapper implements MapperInterface
         }
 
         return (float) $fee;
-    }
-
-    private function validateAmount(float $inputAmount): bool
-    {
-        if (
-            $inputAmount < $this->breakpointsMap->getAmountMin()
-            || $inputAmount > $this->breakpointsMap->getAmountMax()
-        ) {
-            return false;
-        }
-
-        return true;
     }
 }

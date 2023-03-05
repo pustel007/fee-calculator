@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pustel007\FeeCalculator\Mapper\MapProvider;
 
-use Pustel007\FeeCalculator\Model\BreakpointsMap;
+use Pustel007\FeeCalculator\Model\Map;
 
 interface MapProviderInterface
 {
@@ -13,5 +13,5 @@ interface MapProviderInterface
      *
      * @return BreakpointsMap Set of breakpoints.
      */
-    public function provide(): BreakpointsMap;
+    public function provide(): Map;
 }
