@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Pustel007\FeeCalculator;
+namespace Pustel007\FeeCalculator\Helper;
 
-final class FeeFormatter
+final class FeeFormatterHelper
 {
     public static function ceil(float $fee, float $amount): float
     {

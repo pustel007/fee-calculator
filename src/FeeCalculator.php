@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace Pustel007\FeeCalculator;
 
 use Pustel007\FeeCalculator\FeeCalculatorInterface;
+use Pustel007\FeeCalculator\Helper\FeeFormatterHelper;
+use Pustel007\FeeCalculator\Mapper\MapperBuilder;
+use Pustel007\FeeCalculator\Mapper\MapperInterface;
 use Pustel007\FeeCalculator\Model\LoanProposal;
 use Pustel007\FeeCalculator\Validator\LoanProposalValidator;
 
 class FeeCalculator implements FeeCalculatorInterface
 {
-    private $applicationValidator;
-    private $mapperBuilder;
+    private LoanProposalValidator $applicationValidator;
+    private MapperBuilder $mapperBuilder;
 
     public function __construct()
     {
@@ -23,10 +26,11 @@ class FeeCalculator implements FeeCalculatorInterface
     {
         $this->applicationValidator->validate($application);
 
+        /** @var MapperInterface $mapper */
         $mapper = $this->mapperBuilder->build($application->getTerm());
         $fee = $mapper->interpolate($application->getAmount());
 
-        return FeeFormatter::ceil(
+        return FeeFormatterHelper::ceil(
             $fee,
             $application->getAmount()
         );

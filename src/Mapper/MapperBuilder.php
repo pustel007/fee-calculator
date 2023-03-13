@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Pustel007\FeeCalculator;
+namespace Pustel007\FeeCalculator\Mapper;
 
 use OutOfRangeException;
-use Pustel007\FeeCalculator\Mapper\Mapper;
-use Pustel007\FeeCalculator\Mapper\MapperInterface;
 use Pustel007\FeeCalculator\Mapper\MapProvider\Months12MapProvider;
 use Pustel007\FeeCalculator\Mapper\MapProvider\Months24MapProvider;
 
